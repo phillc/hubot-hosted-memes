@@ -12,6 +12,15 @@
 #   Phillip Campbell
 
 module.exports = (robot) ->
+  fs = require('fs')
+  gm = require('gm').subClass({imageMagick: true})
+  path = require('path')
+
+  robot.router.get '/meme', (req, res) ->
+    gm(path.resolve(__dirname, "images", "all-your-base.jpg"))
+      .stream()
+      .pipe(res)
+
   memeUrl = process.env.HUBOT_MEME_URL or process.env.HEROKU_URL
   if keepaliveUrl and not keepaliveUrl.match(/\/$/)
     keepaliveUrl = "#{keepaliveUrl}/"
@@ -95,23 +104,6 @@ module.exports = (robot) ->
   robot.respond /WHAT IF I TOLD YOU (.*)/i, (msg) ->
     memeGenerator msg, 'what-if-i-told-you', 'WHAT IF I TOLD YOU', msg.match[1], (url) ->
       msg.send url
-
-
-  # robot.logger.info "hubot-hosted-memes alive"
-  # # robot.http("#{memUrl}/meme").post() (err, res, body) =>
-  # #   if err?
-  # #     robot.logger.info "keepalie pong: #{err}"
-  # #     robot.emit 'error', err
-  # #   else
-  # #     robot.logger.info "keepalive pong: #{res.statusCode} #{body}"
-
-  # # keepaliveCallback = (req, res) ->
-  # #   res.set 'Content-Type', 'text/plain'
-  # #   res.send 'OK'
-
-  # # # keep this different from the legacy URL in httpd.coffee
-  # # robot.router.post "/heroku/keepalive", keepaliveCallback
-  # # robot.router.get "/heroku/keepalive", keepaliveCallback
 
   memeGenerator = (msg, imageName, text1, text2, callback) ->
     callback "#{memeUrl}/meme?image=#{imageName}&upper_text=#{encodeURIComponent(text1)}&lower_text=#{encodeURIComponent(text2)}"
