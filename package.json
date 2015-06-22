@@ -1,0 +1,9 @@
+{
+  "name": "hubot-hosted-memes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.coffee",
+  "scripts": {
+  },
+  "author": ""
+}
