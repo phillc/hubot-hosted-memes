@@ -9,7 +9,7 @@
 # URLs:
 #
 # Author:
-#   Phillip Campbell
+#   phillc - Phillip Campbell
 
 module.exports = (robot) ->
   fs = require('fs')
@@ -68,15 +68,11 @@ module.exports = (robot) ->
           gravity: "South"
           text: lowerText
 
-      robot.logger.info "stream starts here:"
       this
         .stream (err, stdout, stderr) ->
           console.log err if err
           stderr.pipe(process.stderr)
           stdout.pipe(res)
-
-    # res.send "OK"
-
 
     # writeStream = fs.createWriteStream(path.join(tmpDir, )
 

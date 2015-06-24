@@ -1,11 +1,30 @@
 {
   "name": "hubot-hosted-memes",
+  "description": "A hubot script that allows hubot to host memes",
   "version": "1.0.0",
-  "description": "",
   "main": "index.coffee",
-  "scripts": {},
-  "author": "",
+  "license": "MIT",
+  "keywords": [
+    "hubot",
+    "hubot-scripts",
+    "heroku"
+  ],
+  "author": {
+    "name": "Phillip Campbell",
+    "url": "http://phillc.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/phillc/hubot-hosted-memes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phillc/hubot-hosted-memes/issues"
+  },
+  "homepage": "https://github.com/phillc/hubot-hosted-memes",
   "dependencies": {
     "gm": "^1.18.1"
+  },
+  "peerDependencies": {
+    "hubot": "2.x"
   }
 }
