@@ -60,15 +60,18 @@ module.exports = (robot) ->
 
     drawText = ({image, text, size, gravity}) ->
       [scale, wrap] = switch
-        when text.length < 10 then [1.0, 10]
-        when text.length < 24 then [0.7, 15]
-        when text.length < 48 then [0.5, 20]
-        else [0.4, 25]
+        when text.length < 10 then [1.0, 15]
+        when text.length < 24 then [0.7, 20]
+        when text.length < 48 then [0.5, 25]
+        else [0.4, 30]
+
+      pointSize = scale * size.width / 6.0
 
       image
         .font(path.resolve(__dirname, "..", "fonts", "Impact.ttf"))
-        .pointSize(scale * size.width / 5.0)
-        .stroke("black", scale * size.width / 150.0)
+        .pointSize(pointSize)
+        .out("-interline-spacing", -(pointSize / 3))
+        .stroke("black", pointSize / 30)
         .fill("white")
         .gravity(gravity)
         .drawText(0, 0, wordWrap(text, wrap))
