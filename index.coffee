@@ -20,8 +20,8 @@ module.exports = (robot) ->
   # tmpDir = path.join(os.tmpDir(), 'meme-cache')
 
   memeUrl = process.env.HUBOT_MEME_URL or process.env.HEROKU_URL
-  if keepaliveUrl and not keepaliveUrl.match(/\/$/)
-    keepaliveUrl = "#{keepaliveUrl}/"
+  if memeUrl and not memeUrl.match(/\/$/)
+    memeUrl = "#{memeUrl}/"
 
   unless memeUrl?
     robot.logger.error "hubot-hosted-memes included, but missing HUBOT_MEME_URL."
@@ -157,5 +157,5 @@ module.exports = (robot) ->
   #     msg.send url
 
   memeGenerator = (msg, imageName, text1, text2, callback) ->
-    callback "#{memeUrl}/meme/#{imageName}?upper_text=#{encodeURIComponent(text1)}&lower_text=#{encodeURIComponent(text2)}"
+    callback "#{memeUrl}meme/#{imageName}?upper_text=#{encodeURIComponent(text1)}&lower_text=#{encodeURIComponent(text2)}"
 
