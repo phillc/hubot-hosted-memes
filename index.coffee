@@ -16,6 +16,7 @@ module.exports = (robot) ->
   gm = require('gm').subClass({imageMagick: true})
   path = require('path')
   os = require('os')
+  util = require('util')
   # tmpDir = path.join(os.tmpDir(), 'meme-cache')
 
   memeUrl = process.env.HUBOT_MEME_URL or process.env.HEROKU_URL
@@ -26,42 +27,53 @@ module.exports = (robot) ->
     robot.logger.error "hubot-hosted-memes included, but missing HUBOT_MEME_URL."
     return
 
-  # robot.logger.info "Tmpdir: #{tmpDir}"
+  wordWrap = (str, col=10) ->
+    regex = ".{1,#{col}}(\\s|$)|\\S+?(\\s|$)"
+    str.match(RegExp(regex, 'g')).join("\n")
 
   robot.router.get '/meme/:imageName', (req, res) ->
     upperText = req.query.upper_text
     lowerText = req.query.lower_text
     imageName = req.params.imageName
 
-    robot.logger.info "request: #{imageName} - #{upperText} / #{lowerText}"
-
     image = gm(path.resolve(__dirname, "images", imageName))
 
-    if upperText?
+    drawText = ({image, text, size, gravity}) ->
+      [scale, wrap] = switch
+        when text.length < 10 then [1.0, 10]
+        when text.length < 24 then [0.7, 15]
+        when text.length < 48 then [0.5, 20]
+        else [0.4, 25]
+
       image
-        .font(path.resolve(__dirname, "fonts", "Impact.ttf"), 50)
-        .out("+antialias")
+        .font(path.resolve(__dirname, "fonts", "Impact.ttf"))
+        .pointSize(scale * size.width/5.0)
         .stroke("black", 3)
         .fill("white")
-        .gravity("North")
-        .drawText(10, 50, upperText)
-      # .fontSize(68)
-      # .pointSize(50)
+        .gravity(gravity)
+        .drawText(0, 0, wordWrap(text, wrap))
 
-    if lowerText?
-      image
-        .font(path.resolve(__dirname, "fonts", "Impact.ttf"), 50)
-        .out("+antialias")
-        .stroke("black", 3)
-        .fill("white")
-        .gravity("South")
-        .drawText(10, 50, lowerText)
+    image.size (err, size) ->
+      if upperText?
+        drawText
+          image: this
+          size: size
+          gravity: "North"
+          text: upperText
 
-    image
-      .stream (err, stdout, stderr) ->
-        console.log err if err
-        stderr.pipe(process.stderr)
-        stdout.pipe(res)
+      if lowerText?
+        drawText
+          image: this
+          size: size
+          gravity: "South"
+          text: lowerText
+
+      robot.logger.info "stream starts here:"
+      this
+        .stream (err, stdout, stderr) ->
+          console.log err if err
+          stderr.pipe(process.stderr)
+          stdout.pipe(res)
 
     # res.send "OK"
 
