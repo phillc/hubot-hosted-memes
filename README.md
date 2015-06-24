@@ -22,3 +22,6 @@ hubot-hosted-memes is configured by one of two environment variables:
 
 * HUBOT_MEME_URL or HEROKU_URL - the url of where hubot can be accessed
 
+## Credits
+
+hubot-hosted-memes wouldn't be possible without the original hubot script, meme_captain by bobanj
