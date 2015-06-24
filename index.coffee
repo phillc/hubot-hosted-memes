@@ -26,36 +26,45 @@ module.exports = (robot) ->
     robot.logger.error "hubot-hosted-memes included, but missing HUBOT_MEME_URL."
     return
 
-  robot.logger.info "Tmpdir: #{tmpDir}"
+  # robot.logger.info "Tmpdir: #{tmpDir}"
 
   robot.router.get '/meme/:imageName', (req, res) ->
+    upperText = req.query.upper_text
+    lowerText = req.query.lower_text
+    imageName = req.params.imageName
+
+    robot.logger.info "request: #{imageName} - #{upperText} / #{lowerText}"
+
+    image = gm(path.resolve(__dirname, "images", imageName))
+
+    if upperText?
+      image
+        .font(path.resolve(__dirname, "fonts", "Impact.ttf"), 50)
+        .out("+antialias")
+        .stroke("black", 3)
+        .fill("white")
+        .gravity("North")
+        .drawText(10, 50, upperText)
       # .fontSize(68)
-      # .fill("#ffffff")
-      # .stroke("#000000", 10)
-      # .font("Helvetica.ttf", 50)
-      # .drawText(10, 10, "GMagick!")
-      # .flip()
-    gm(path.resolve(__dirname, "images", req.params.imageName))
-      .font("Impact.ttf", 50)
-      .drawText(10, 50, "from scratch")
-      .drawText(30, 98, "graphics magick")
-      .fontSize(68)
-      .stroke("#efe", 2)
-      .pointSize(50)
-      .fontSize(50)
-      .fill("#888")
-      .drawText(30, 98, "graphics magick")
-      .font("Helvetica.ttf", 24)
-      .drawText(30, 98, "graphics magick")
-      .fill("#888")
-      .draw("text 0,0 'Test Text'")
+      # .pointSize(50)
+
+    if lowerText?
+      image
+        .font(path.resolve(__dirname, "fonts", "Impact.ttf"), 50)
+        .out("+antialias")
+        .stroke("black", 3)
+        .fill("white")
+        .gravity("South")
+        .drawText(10, 50, lowerText)
+
+    image
       .stream (err, stdout, stderr) ->
         console.log err if err
+        stderr.pipe(process.stderr)
         stdout.pipe(res)
 
     # res.send "OK"
 
-    robot.logger.info "request: #{req.params.imageName} - #{req.query}"
 
     # writeStream = fs.createWriteStream(path.join(tmpDir, )
 
