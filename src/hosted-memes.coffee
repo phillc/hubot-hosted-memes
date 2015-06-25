@@ -8,6 +8,8 @@
 #   HUBOT_MEME_URL or HEROKU_URL: required
 #
 # Commands:
+#
+#   hubot (SUCH|MUCH|VERY) <text> (MUCH|SO|MANY) <text> - Much doge. So meme.
 #   hubot <text> (SUCCESS|NAILED IT) - Generates success kid with the top caption of <text>
 #   hubot <text> ALL the <things> - Generates ALL THE THINGS
 #   hubot <text> TOO DAMN <high> - Generates THE RENT IS TOO DAMN HIGH guy
@@ -170,6 +172,10 @@ module.exports = (robot) ->
 
   robot.respond /(IF .*), ((ARE|CAN|DO|DOES|HOW|IS|MAY|MIGHT|SHOULD|THEN|WHAT|WHEN|WHERE|WHICH|WHO|WHY|WILL|WON\'T|WOULD)[ \'N].*)/i, (msg) ->
     memeGenerator msg, 'philosoraptor.jpg', msg.match[1], msg.match[2] + (if msg.match[2].search(/\?$/)==(-1) then '?' else ''), (url) ->
+      msg.send url
+
+  robot.respond /((?:SUCH|MUCH|VERY).*) ((?:MUCH|SO|MANY).*)/i, (msg) ->
+    memeGenerator msg, 'doge.jpg', msg.match[1], msg.match[2], (url) ->
       msg.send url
 
   robot.respond /(.*)(AND IT\'S GONE.*)/i, (msg) ->
