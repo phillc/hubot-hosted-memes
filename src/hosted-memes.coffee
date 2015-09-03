@@ -123,7 +123,7 @@ module.exports = (robot) ->
       msg.send url
 
   robot.respond /(.*) (ALL the .*)/i, (msg) ->
-    memeGenerator msg, 'all-the-things.jpg', msg.match[1], msg.match[2], (url) ->
+    memeGenerator msg, 'all-the-things.png', msg.match[1], msg.match[2], (url) ->
       msg.send url
 
   robot.respond /(I DON'?T ALWAYS .*) (BUT WHEN I DO,? .*)/i, (msg) ->

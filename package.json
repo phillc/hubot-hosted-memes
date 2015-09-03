@@ -1,13 +1,14 @@
 {
   "name": "hubot-hosted-memes",
   "description": "A hubot script that allows hubot to host memes",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "index.coffee",
   "license": "MIT",
   "keywords": [
     "hubot",
     "hubot-scripts",
-    "heroku"
+    "heroku",
+    "meme"
   ],
   "author": {
     "name": "Phillip Campbell",
