@@ -41,7 +41,7 @@ module.exports = (robot) ->
   util = require('util')
   # tmpDir = path.join(os.tmpDir(), 'meme-cache')
 
-  memeUrl = process.env.HUBOT_MEME_URL or process.env.HEROKU_URL
+  memeUrl = process.env.HUBOT_MEME_URL or process.env.HEROKU_URL or process.env.HUBOT_HEROKU_KEEPALIVE_URL
   if memeUrl and not memeUrl.match(/\/$/)
     memeUrl = "#{memeUrl}/"
 
