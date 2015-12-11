@@ -15,7 +15,7 @@
 #   hubot <text> TOO DAMN <high> - Generates THE RENT IS TOO DAMN HIGH guy
 #   hubot <text>, AND IT'S GONE - Bank Teller
 #   hubot <text>, BITCH PLEASE <text> - Generates Yao Ming
-#   hubot <text>, COURAGE <text> - Generates Courage Wolf
+#   hubot <text>, COURAGE WOLF <text> - Generates Courage Wolf
 #   hubot Aliens guy <text> - Aliens guy weighs in on something
 #   hubot All your <text> are belong to <text> - All your <text> are belong to <text>
 #   hubot Brace yourself <text> - Ned Stark braces for <text>
@@ -154,7 +154,7 @@ module.exports = (robot) ->
     memeGenerator msg, 'yao-ming.jpg', msg.match[1], msg.match[2], (url) ->
       msg.send url
 
-  robot.respond /(.*)\s*COURAGE\s*(.*)/i, (msg) ->
+  robot.respond /(.*)\s*COURAGE WOLF\s*(.*)/i, (msg) ->
     memeGenerator msg, 'courage-wolf.jpg', msg.match[1], msg.match[2], (url) ->
       msg.send url
 
